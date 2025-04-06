@@ -1,31 +1,31 @@
-﻿@page "/neatBlazor/demoproduct"
+﻿@page "/neatBlazor/demoProduct"
 
 <h2 class="text-primary">Demo Product</h2>
 <div class="mt-2 p-2">
     <div class="row">
-        @foreach(var prod in ProductList)
+        @foreach (var prod in ProductList)
         {
             <div class="bg-light border col-6">
                 <h4 class="text-secondary">Product - @prod.Id</h4>
-                Name - @prod.Name <br/>
+                Name - @prod.Name <br />
                 Show Properties:
                 <input type="checkbox" @bind="prod.IsActive" />
 
                 @if (prod.IsActive)
                 {
-                    @foreach(var prodProp in prod.ProductProperties)
+                    @foreach (var prodProp in prod.ProductProperties)
                     {
                         <p>@prodProp.Key - @prodProp.Value</p>
                     }
                 }
                 <br />
-                <input type="button" class="btn btn-danger" style="width:100px" value="Delete" @onclick="()=>RemoveProduct(prod.Id)" />
+                <_DeleteButtonComponent/>
             </div>
         }
     </div>
     <div class="row pt-4">
 
-        <input type="button" class="btn btn-success" style="width:100px" value="Counter" @onclick="()=>IncrementCount(5)"/>
+        <input type="button" class="btn btn-success" style="width:100px" value="Counter" @onclick="()=>IncrementCount(5)" />
         Count: @Count
     </div>
 </div>
@@ -66,16 +66,6 @@
 
     private void IncrementCount(int counter)
     {
-        Count+= counter;
+        Count += counter;
     }
-
-    private void RemoveProduct(int productId)
-    {
-        var product = ProductList.FirstOrDefault(p => p.Id == productId);
-        if(product is not null)
-        {
-           ProductList.Remove(product);
-        }
-    }
-
 }
