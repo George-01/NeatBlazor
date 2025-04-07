@@ -1,37 +1,26 @@
 ﻿@page "/neatBlazor/demoProduct"
 
 <h2 class="text-primary">Demo Product</h2>
+<p>Favorite Count: @FavoriteCount</p> <br />
+<p>Product Name: @ProductName</p><br />
 <div class="mt-2 p-2">
     <div class="row">
         @foreach (var prod in ProductList)
         {
-            <div class="bg-light border col-6">
-                <h4 class="text-secondary">Product - @prod.Id</h4>
-                Name - @prod.Name <br />
-                Show Properties:
-                <input type="checkbox" @bind="prod.IsActive" />
+            <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountChange" OnDivClicked="@(async (isClicked) => DivClickedAction(prod.ProductName))">
+            </_IndividualProduct>
 
-                @if (prod.IsActive)
-                {
-                    @foreach (var prodProp in prod.ProductProperties)
-                    {
-                        <p>@prodProp.Key - @prodProp.Value</p>
-                    }
-                }
-                <br />
-                <_DeleteButtonComponent/>
-            </div>
+            @* <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountChange" 
+                OnDivClicked="@(async (isClicked) => { if (isClicked) { ProductName = prod.ProductName; } })">
+            </_IndividualProduct> *@
         }
     </div>
-    <div class="row pt-4">
 
-        <input type="button" class="btn btn-success" style="width:100px" value="Counter" @onclick="()=>IncrementCount(5)" />
-        Count: @Count
-    </div>
 </div>
 
 @code {
-    public int Count { get; set; } = 0;
+    public int FavoriteCount { get; set; } = 0;
+    public string ProductName { get; set; } = string.Empty;
 
     List<Product> ProductList = new();
 
@@ -40,7 +29,7 @@
         ProductList.Add(new()
             {
                 Id = 1,
-                Name = "Midnight Blaze",
+                ProductName = "Midnight Blaze",
                 IsActive = false,
                 ProductProperties = new List<Product_Prop>()
                 {
@@ -53,7 +42,7 @@
         ProductList.Add(new()
             {
                 Id = 2,
-                Name = "Blossom Lily",
+                ProductName = "Blossom Lily",
                 IsActive = true,
                 ProductProperties = new List<Product_Prop>()
                 {
@@ -64,8 +53,20 @@
             });
     }
 
-    private void IncrementCount(int counter)
+    protected void FavoriteCountChange(bool isSelected)
     {
-        Count += counter;
+        if (isSelected)
+        {
+            FavoriteCount++;
+        }
+        else
+        {
+            FavoriteCount--;
+        }
+    }
+
+    protected void DivClickedAction(string productName)
+    {
+        ProductName = productName;
     }
 }
