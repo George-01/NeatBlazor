@@ -2,17 +2,14 @@
 
 <h2 class="text-primary">Demo Product</h2>
 <p>Favorite Count: @FavoriteCount</p> <br />
-<p>Product Name: @ProductName</p><br />
+<p>Product Name: @SelectedDivProductName</p>
+<br />
 <div class="mt-2 p-2">
     <div class="row">
         @foreach (var prod in ProductList)
         {
-            <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountChange" OnDivClicked="@(async (isClicked) => DivClickedAction(prod.ProductName))">
+            <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountChange" OnDivClicked="DivClickedAction">
             </_IndividualProduct>
-
-            @* <_IndividualProduct Product="prod" OnFavoriteUpdated="FavoriteCountChange" 
-                OnDivClicked="@(async (isClicked) => { if (isClicked) { ProductName = prod.ProductName; } })">
-            </_IndividualProduct> *@
         }
     </div>
 
@@ -20,7 +17,7 @@
 
 @code {
     public int FavoriteCount { get; set; } = 0;
-    public string ProductName { get; set; } = string.Empty;
+    public string SelectedDivProductName { get; set; } = string.Empty;
 
     List<Product> ProductList = new();
 
@@ -67,6 +64,6 @@
 
     protected void DivClickedAction(string productName)
     {
-        ProductName = productName;
+        SelectedDivProductName = productName;
     }
 }

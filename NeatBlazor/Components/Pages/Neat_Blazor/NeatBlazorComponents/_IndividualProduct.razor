@@ -1,4 +1,4 @@
-﻿<div class="bg-light border col-6" @onclick="() => DivClicked(Product.ProductName)">
+﻿<div class="bg-light border col-6" @onclick="(args) => DivClicked(args, Product.ProductName)">
     <h4 class="text-secondary">Product - @Product.Id</h4>
 
     <input type="checkbox" @onchange="FavoriteUpdated" /> Add to Favorites <br />
@@ -40,13 +40,9 @@
         await OnFavoriteUpdated.InvokeAsync((bool)(args.Value ?? false));
     }
 
-    // private async Task DivClicked(MouseEventArgs args)
-    // {
-    //     await OnDivClicked.InvokeAsync(true);
-    // }
-
-    private async Task DivClicked(string productName)
+    private async Task DivClicked(MouseEventArgs args, string productName)
     {
         await OnDivClicked.InvokeAsync(productName);
     }
+
 }
